@@ -1,3 +1,4 @@
+using dqc_signalr_webapp_demo.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -22,6 +23,12 @@ namespace dqc_signalr_webapp_demo
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
+            // Add Winner Service
+            services.AddSingleton<WinnerService>();
+
+            // Add signalR to Application
+            services.AddSignalR().AddAzureSignalR(Configuration.GetSection("Azure:SignalR").Value);
+
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {
@@ -42,9 +49,14 @@ namespace dqc_signalr_webapp_demo
                 app.UseHsts();
             }
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
+
+            // Map routes to hub
+            app.UseAzureSignalR(routes => {
+                routes.MapHub<RaffleHub>("/raffle");
+            });
 
             app.UseMvc(routes =>
             {
