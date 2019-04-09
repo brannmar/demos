@@ -26,22 +26,42 @@ export class EnterRaffle extends Component {
     render() {
         if (!this.state.entered) {
             return (<Fragment>
-                <h1>Enter ticket number to enter raffle</h1>
-                <input type="text" name="ticketNumber" onChange={(e) => { this.setState({ id: e.target.value }); }} />
-                <button onClick={() => {
-                    this.setState({ entered: true });
-                    this.connection.invoke('enterRaffle', this.state.id);
-                }} >Enter raffle</button>
+                <h1 className="padding-bottom-1">Enter ticket number to enter raffle</h1>
+                <div className="row">
+                    <div className="col-lg-8">
+                        <div className="input-group input-group-lg">
+                            <input type="text" className="form-control" name="ticketNumber" onChange={(e) => { this.setState({ id: e.target.value }); }} />
+                            <span className="input-group-btn">
+                                <button className="btn btn-primary" onClick={() => {
+                                    this.setState({ entered: true });
+                                    this.connection.invoke('enterRaffle', this.state.id);
+                                }} >Enter raffle</button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
             </Fragment>);
         }
         else if (this.state.winner) {
-            return (<Fragment><h1>WINNER</h1></Fragment>);
+            return (<Fragment>
+                <div className="alert alert-success" role="alert">
+                    <h1>WINNER</h1>
+                </div>
+            </Fragment>);
         }
         else if (this.state.lost) {
-            return (<Fragment><h1>YOU LOST, Better luck next time.</h1></Fragment>);
+            return (<Fragment>
+                <div className="alert alert-warning" role="alert">
+                    <h1>YOU LOST, Better luck next time.</h1>
+                </div>
+            </Fragment>);
         }
         else {
-            return (<Fragment><h1>You have entered the raffle, waiting for winner.</h1></Fragment>);
+            return (<Fragment>
+                <div class="alert alert-info" role="alert">
+                    <h1>You have entered the raffle, waiting for winner.</h1>
+                </div>
+            </Fragment>);
         }
     }
 }

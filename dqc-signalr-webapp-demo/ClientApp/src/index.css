@@ -1,6 +1,33 @@
+/**
+* Set up Dev Summit font for headers. Like a boss!
+*/
+@import url('https://fonts.googleapis.com/css?family=Arvo');
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: 'Arvo', serif;
+}
+
+/**
+* Use system default fonts like a sane person.
+*/
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+}
+
 @media (max-width: 767px) {
     /* On small screens, the nav menu spans the full width of the screen. Leave a space for it. */
     body {
         padding-top: 50px;
     }
+}
+
+.padding-bottom-1 {
+    padding-bottom: 1rem;
+}
+.padding-bottom-2 {
+    padding-bottom: 2rem;
 }
