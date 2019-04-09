@@ -16,10 +16,15 @@ public class RaffleHub : Hub
     public void EnterRaffle(string raffleNumber)
     {
         WinnerService.RaffleNumbers.TryAdd(raffleNumber, Context.ConnectionId);
+        Clients.All.SendAsync("raffleEntries", WinnerService.RaffleNumbers.Keys.Count);
     }
 
     public override Task OnConnectedAsync()
     {
+        WinnerService.PotentialWinners++;
+        Clients.All.SendAsync("clientsConnected", WinnerService.PotentialWinners);
+        Clients.All.SendAsync("raffleEntries", WinnerService.RaffleNumbers.Keys.Count);
+
         return base.OnConnectedAsync();
     }
 
@@ -29,7 +34,11 @@ public class RaffleHub : Hub
         {
             var keyValuePair = WinnerService.RaffleNumbers.FirstOrDefault(_ => _.Value == Context.ConnectionId);
             WinnerService.RaffleNumbers.Remove(keyValuePair.Key);
+            Clients.All.SendAsync("raffleEntries", WinnerService.RaffleNumbers.Keys.Count);
         }
+
+        WinnerService.PotentialWinners--;
+        Clients.All.SendAsync("clientsConnected", WinnerService.PotentialWinners);
 
         return base.OnDisconnectedAsync(exception);
     }

@@ -44,6 +44,8 @@ namespace dqc_signalr_webapp_demo.Controllers
         {
             WinnerService.RaffleNumbers.Clear();
 
+            RaffleHub.Clients.All.SendAsync("reset");
+
             return Ok();
         }
 

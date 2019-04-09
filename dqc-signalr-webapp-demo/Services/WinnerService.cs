@@ -14,6 +14,12 @@ namespace dqc_signalr_webapp_demo.Services
             get { return raffleNumbers; }
         }
 
+        public int PotentialWinners
+        {
+            get;
+            set;
+        }
+
         public KeyValuePair<string, string> PickAWinner()
         {
             Random random = new Random((int)DateTime.UtcNow.Ticks);
