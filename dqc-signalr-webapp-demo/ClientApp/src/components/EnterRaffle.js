@@ -61,7 +61,8 @@ export class EnterRaffle extends Component {
                                 <input type="text" className="form-control" name="ticketNumber" onChange={(e) => { this.setState({ id: e.target.value }); }} />
                                 <span className="input-group-btn">
                                     <button className="btn btn-primary" onClick={() => {
-                                        this.setState({ entered: true });
+                                    this.setState({ entered: true });
+                                    // Ofcourse I want to enter the raffle, here take my ticket id.
                                         this.connection.invoke('enterRaffle', this.state.id);
                                     }} >Enter raffle</button>
                                 </span>
